@@ -62,42 +62,28 @@ console.log(getGitHubUserProfile("Alenriquez96")).then(data => {
 // Declara una función printGithubUserProfile(username) que reciba como argumento el nombre de un usuario (username), retorne {img, name} y pinte la foto y el nombre en el DOM.
 
 function printGithubUserProfile(username) {
-    let response = {};
-    fetch(`https://api.github.com/users/${username}`)
-    .then(res => res.json())
-    .then(data => {
-        response.img = data.avatar_url;
-        response.name = data.name;
-        const dataList = document.querySelector("body");
-        data.forEach(dat => {
-            const lista = document.createElement('li');
-            lista.textContent = `${dat.img}: ${dat.name}`;
-            dataList.appendChild(lista);
-        });
-    return response;
-});
-}
-printGithubUserProfile("alenriquez96");
 
-let response = fetch(`https://api.github.com/users/${username}`)
+    let response = fetch(`https://api.github.com/users/${username}`)
         .then(res => res.json())
         .then(data => {
-             response = {
-                img: data.avatar_url,
-                name: data.name
-            };
-           
-            
-            const pintarDom = document.querySelector("body");
-            const img = document.createElement("img");
-            img.src = response.img;
-            const lista = document.createElement('li');
-            lista.textContent = `${response.name}`; //${response.img}: 
-            pintarDom.appendChild(lista);
-            pintarDom.appendChild(img);
-            
-        });
-        return response;
+            let img = data.avatar_url;
+            let name = data.name;
+            return { img, name }
+        })
+        return response
+}
+//aqui se llama a la funcion
+printGithubUserProfile('alenriquez96').then(response => {
+    
+    const imagen = document.createElement("img");
+    imagen.src = response.img;
+    imagen.alt = `Avatar de ${response.name}`
+    const lista = document.createElement('li');
+    lista.textContent = `${response.name}`;
+    document.body.appendChild(lista);
+    document.body.appendChild(imagen);
+
+});
 
 
 // EJERCICIO 07
