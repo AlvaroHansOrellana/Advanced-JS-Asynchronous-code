@@ -86,5 +86,17 @@ printGithubUserProfile('alenriquez96').then(response => {
 });
 
 
-// EJERCICIO 07
+// 9.- Dada una lista de usuarios de github guardada en una array,crea una funcion fetchGithubUsers(userNames) que utilice 'https://api.github.com/users/${name}' para obtener el nombre de cada usuario.
+// Objetivo: Usar Promise.all()
+// Recordatorio: Una llamada a fetch() devuelve un objeto promesa.
+// Pregunta. ¿cuántas promesas tendremos?
 
+function fetchGithubUsers(userNames) {
+    Promise.all(
+        userNames.map(nombre => fetch(`./jason ${nombre}`).then(res => res.json()))
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                return data[i].name;
+            }
+        })
+    )}
