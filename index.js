@@ -91,12 +91,10 @@ printGithubUserProfile('alenriquez96').then(response => {
 // Recordatorio: Una llamada a fetch() devuelve un objeto promesa.
 // Pregunta. ¿cuántas promesas tendremos?
 
-function fetchGithubUsers(userNames) {
-    Promise.all(
-        userNames.map(nombre => fetch(`./jason ${nombre}`).then(res => res.json()))
-        .then(data => {
-            for (let i = 0; i < data.length; i++) {
-                return data[i].name;
-            }
-        })
-    )}
+    function fetchGithubUsers(userNames) {
+        return Promise.all(
+            userNames.map(nombre => fetch(`https://api.github.com/users/${nombre}`).then(res => res.json()))
+        ).then(data => data.map(user => user.name))
+    }
+    
+    fetchGithubUsers(["Deydre", "Octocat", "Andperman"]).then(users => console.log(users))
